@@ -224,8 +224,10 @@
 
   // Iterate over the list of indices that should exist before indexing records
   foreach ($dates as $date) {
-    // Ensure that the required index is not yet defined before defining it
-    if (!$client->indices()->getMapping(['index' => $date, 'type' => 'doc'])) {
+    try {
+      // Ensure that the required index is not yet defined before defining it
+      $client->indices()->getMapping(['index' => $date, 'type' => 'doc']);
+    } catch (\Exception $e) {
       // Create the required index using the pre-build schema
       $client->indices()->create([
         'index' => $date,
