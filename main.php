@@ -238,7 +238,7 @@
   foreach ($records as $record) {
     // Attempt to index the record
     $response = $client->index([
-      'index' => 'dmarc-'.date('Y.m.d', $record['begin_timestamp'] / 1000),
+      'index' => 'dmarc-'.date('Y.m.d', $record['end_timestamp'] / 1000),
       'type'  => 'doc',
       'body'  => $record
     ]);
