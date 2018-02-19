@@ -246,7 +246,6 @@
         'body'  => $record
       ]);
     } catch (\Exception $e) {
-      trigger_error('Unable to index record: '.var_export($record, true).' '.
-        'Reason: '.var_export($response, true));
+      trigger_error('Unable to index record: '.var_export($record, true));
     }
   }
