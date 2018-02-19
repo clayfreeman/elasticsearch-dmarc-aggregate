@@ -238,14 +238,14 @@
 
   // Iterate over each record to be indexed in Elastic Search
   foreach ($records as $record) {
-    // Attempt to index the record
-    $response = $client->index([
-      'index' => 'dmarc-'.date('Y.m.d', $record['end_timestamp'] / 1000),
-      'type'  => 'doc',
-      'body'  => $record
-    ]);
-    // Check the response result to see if the record was indexed
-    if ($response['result'] !== 'created') {
+    try {
+      // Attempt to index the record
+      $response = $client->index([
+        'index' => 'dmarc-'.date('Y.m.d', $record['end_timestamp'] / 1000),
+        'type'  => 'doc',
+        'body'  => $record
+      ]);
+    } catch (\Exception $e) {
       trigger_error('Unable to index record: '.var_export($record, true).' '.
         'Reason: '.var_export($response, true));
     }
